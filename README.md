@@ -7,7 +7,7 @@ PhotoFiltersSDK aims to provide fast, powerful and flexible image processing ins
 
 Library supports OS on API 15 and above.
 
-![PhotoFilters gif](art/photofilters.gif)
+![PhotoFilters gif](output.gif)
 
 ## Features
 PhotoFiltersSDK processes filter on any Image within fraction of second since processing logic is in NDK. At present following image filters are included: 
