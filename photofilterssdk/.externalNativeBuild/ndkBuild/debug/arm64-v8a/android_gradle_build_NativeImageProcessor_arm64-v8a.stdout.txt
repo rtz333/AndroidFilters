@@ -1,0 +1,3 @@
+Android NDK: WARNING: Unsupported source file extensions in D:\AndroidStudioProjects\Library\AndroidFilters\photofilterssdk\src\main\jni\Android.mk for module NativeImageProcessor    
+Android NDK:   Android.mk Application.mk    
+make: `D:/AndroidStudioProjects/Library/AndroidFilters/photofilterssdk/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libNativeImageProcessor.so' is up to date.

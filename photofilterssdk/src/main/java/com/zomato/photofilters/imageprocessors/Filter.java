@@ -20,13 +20,20 @@ import java.util.List;
  * object and they are then processed in that particular order
  */
 public class Filter {
+
+    private String name;
     private List<SubFilter> subFilters = new ArrayList<>();
 
-    public Filter(Filter filter) {
-        this.subFilters = filter.subFilters;
+    public Filter(String name) {
+        this.name = name;
     }
 
-    public Filter() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -46,6 +53,7 @@ public class Filter {
 
     /**
      * Adds all {@link SubFilter}s from the List to the Main Filter.
+     *
      * @param subFilterList a list of {@link SubFilter}s; must not be null
      */
     public void addSubFilters(@NonNull List<SubFilter> subFilterList) {
@@ -56,9 +64,8 @@ public class Filter {
      * Get a new list of currently applied subfilters.
      *
      * @return a {@link List} of {@link SubFilter}.
-     *         Empty if no filters are added to {@link #subFilters};
-     *         never null
-     *
+     * Empty if no filters are added to {@link #subFilters};
+     * never null
      * @see #addSubFilter(SubFilter)
      * @see #addSubFilters(List)
      */
@@ -109,20 +116,14 @@ public class Filter {
      */
     public Bitmap processFilter(Bitmap inputImage) {
         Bitmap outputImage = inputImage;
-        if (outputImage != null) {
-            for (SubFilter subFilter : subFilters) {
-                try {
-                    outputImage = subFilter.process(outputImage);
-                } catch (OutOfMemoryError oe) {
-                    System.gc();
-                    try {
-                        outputImage = subFilter.process(outputImage);
-                    } catch (OutOfMemoryError ignored) {
-                    }
-                }
+        for (int i = 0; i < subFilters.size(); i++) {
+            SubFilter subFilter = subFilters.get(i);
+            Bitmap bitmap = outputImage;
+            outputImage = subFilter.process(outputImage);
+            if (i != 0 && bitmap != outputImage) {
+                bitmap.recycle();
             }
         }
-
         return outputImage;
     }
 

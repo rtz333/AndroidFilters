@@ -34,16 +34,21 @@ public class VignetteSubFilter implements SubFilter {
     @Override
     public Bitmap process(Bitmap inputImage) {
         Bitmap vignette = BitmapFactory.decodeResource(context.getResources(), R.drawable.vignette);
+        Bitmap drawVignette =  Bitmap.createScaledBitmap(vignette, inputImage.getWidth(), inputImage.getHeight(), true);
 
-        vignette = Bitmap.createScaledBitmap(vignette, inputImage.getWidth(), inputImage.getHeight(), true);
+        Bitmap outputImage = inputImage.copy(inputImage.getConfig(), true);
+
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setAlpha(alpha);
 
-        Canvas comboImage = new Canvas(inputImage);
-        comboImage.drawBitmap(vignette, 0f, 0f, paint);
+        Canvas canvas = new Canvas(outputImage);
+        canvas.drawBitmap(drawVignette, 0f, 0f, paint);
 
-        return inputImage;
+        vignette.recycle();
+        drawVignette.recycle();
+
+        return outputImage;
     }
 
     @Override
